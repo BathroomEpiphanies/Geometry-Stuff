@@ -9,6 +9,7 @@
 */
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Eisenstein implements Comparable<Eisenstein>, Serializable {
     private static final long serialVersionUID = 300L;
@@ -44,8 +45,8 @@ public class Eisenstein implements Comparable<Eisenstein>, Serializable {
 	return this.a == that.a && this.b == that.b;
     }
 
-    /* Scans through the first "triant" centered on the positive real
-     * axis.
+    /* Scans through the first "triant" centered around the positive
+     * real axis.
      */
     public Eisenstein inc() {
 	if(this.b >= this.a-1)
@@ -121,21 +122,16 @@ public class Eisenstein implements Comparable<Eisenstein>, Serializable {
 	return new Eisenstein(prod.a%norm, prod.b%norm);
     }
 
-    /* Fancy printing formatted string.
+    /* Fancy formatted printing string.
      */
     public String toString() {
-	if(this.b==0)
-	    return String.format("%d", this.a);
-	else if(this.a==0)
-	    return String.format("%dw", this.b);
-	else if(this.b==1)
-	    return String.format("%d+w", this.a, this.b);
-	else if(this.b==-1)
-	    return String.format("%d-w", this.a, this.b);
-	else if(this.b>1)
-	    return String.format("%d+%dw", this.a, this.b);
-	else
-	    return String.format("%d%dw", this.a, this.b);
+	String res = this.a==0? "": ""+this.a;
+	switch(this.b) {
+	case  0: return res;
+	case  1: return res + "+w";
+	case -1: return res + "-w";
+	default: return res + (this.b>0? "+": "") + this.b + "w";
+	}
     }
 
     /* Returns a string representing the complex number in a+bi form.

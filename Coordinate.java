@@ -59,10 +59,8 @@ public class Coordinate implements Serializable {
      * the origin, in the interval [-π,π).
      */
     public double angle(Coordinate that) {
-	if(this.cross(that) < 0)
-	    return Math.acos(this.dot(that)/this.magnitude()/that.magnitude());
-	else
-	    return -Math.acos(this.dot(that)/this.magnitude()/that.magnitude());
+	double res = Math.acos(this.dot(that)/this.magnitude()/that.magnitude());
+	return this.cross(that) < 0? res: -res;
     }
 
     /* Returns a new Coordinate representing the mirror, through the
@@ -120,11 +118,9 @@ public class Coordinate implements Serializable {
     }
 
     public boolean inAny(List<Polygon> polygons) {
-	for(Iterator<Polygon> it=polygons.iterator(); it.hasNext(); ) {
-	    Polygon p = it.next();
+	for(Polygon p: polygons)
 	    if(p.contains(this))
 		return true;
-	}
 	return false;
     }
 }
